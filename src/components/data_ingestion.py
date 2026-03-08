@@ -10,6 +10,10 @@ from dataclasses import dataclass
 from src.components.data_transformation import DataTransformation
 from src.components.data_transformation import DataTransformationConfig
 
+from src.components.model_trainer import ModelTrainer
+from src.components.model_trainer import ModelTrainerConfig
+
+
 @dataclass
 class DataIngestionConfig:
     train_data_path: str = os.path.join('artifacts', 'train.csv')
@@ -54,3 +58,8 @@ if __name__ == "__main__":
 
     data_transformation = DataTransformation()
     train_arr, test_arr, preprocessor_path = data_transformation.initiate_data_transformation(train_path, test_path)
+
+    model_trainer = ModelTrainer()
+    best_model_name, best_model_score = model_trainer.initiate_model_trainer(train_arr, test_arr)
+
+    print(f"Best Model: {best_model_name}, R2 Score: {best_model_score}")
